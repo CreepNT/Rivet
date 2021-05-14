@@ -1,0 +1,24 @@
+{
+    "0x041" : { //Hexadecimal code of the facility == (error_code & 0xFFF0000) >> 16
+            "name":"SCE_ERROR_FACILITY_NETWORK",
+            "errors": {
+                "0x8450" : {
+                    "name":"SCE_NET_CTL_ERROR_NOT_TERMINATED",
+                    "description" : "libnetctl has not been terminated yet."
+                }
+            }
+    },
+    "0x002" : { //Hexadecimal code of the error == (error_code & 0xFFFF)
+        "name" : "SCE_ERROR_FACILITY_KERNEL",
+        "description" : "Kernel facility",
+        "errors": {
+            "0x0001":{
+                "name":"SCE_KERNEL_ERROR_ERROR",
+                "description":"Generic kernel error"
+            },
+            "0x0002" : {
+                "name":"SCE_KERNEL_ERROR_NOT_IMPLEMENTED"
+            }
+        }
+    }
+}
