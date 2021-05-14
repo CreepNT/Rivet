@@ -103,7 +103,7 @@ async def refreshcfg(ctx):
         await ctx.send("Failed to fetch errors database information. It will not be updated")
     else:
         await ctx.send(f"Local database SHA-1 : `{errorsDbSha1}`\nOnline database SHA-1 :`{api_resp['sha']}`")
-        if (errorsDbSha1 != api_resp['sha'].lower()):
+        if (errorsDbSha1 != api_resp['sha'].lower()) or errorsDb == None:
             errorsUpdated = await update_db(CONFIG.DATABASE_PATH, api_resp['download_url'])
             errorsDbSha1 = api_resp['sha'].lower()
             if errorsUpdated:
@@ -176,7 +176,7 @@ async def on_command_error(ctx, error):
     if (str(error).rfind("is not found") == -1):
         await ctx.send(f"{error}")
     else:
-        await ctx.send("Sorry, command not found.😥")
+        await ctx.send("😥Sorry, command not found.")
 
 #Launch bot
 bot.run(SECRETS.TOKEN)

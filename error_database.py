@@ -119,7 +119,11 @@ def getErrorCodeInfo(db : dict, error_code : int) -> str:
     return ret
 
 def createDbFromJSONString(s : str) -> dict:
-    initDict = json.loads(s)
+    try:
+        initDict = json.loads(s)
+    except:
+        print("Exception raised while parsing JSON object.")
+        return None
     ret = dict()
 
     try:
