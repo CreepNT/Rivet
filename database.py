@@ -189,14 +189,14 @@ def getDecoratedErrorCodeInfo(db : Database, error_code : int) -> str:
 
     fatal = (error_code & IS_FATAL_MASK)
     
-    ret = getFacilityNameFromErrorCode(db, error_code)
+    ret = "Facility : " + getFacilityNameFromErrorCode(db, error_code)
     facDesc = getFacilityDescriptionFromErrorCode(db, error_code)
     if facDesc != None:
         ret += f" ({facDesc})\n"
     else:
         ret += "\n"
     
-    ret += getErrorNameFromErrorCode(db, error_code) + "\n"
+    ret += "Error code : " + getErrorNameFromErrorCode(db, error_code) + "\n"
     errDesc = getErrorDescriptionFromErrorCode(db, error_code)
     if errDesc != None:
         ret += f"Error description : {errDesc}\n"
