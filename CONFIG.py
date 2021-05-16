@@ -3,5 +3,3 @@ REPO_URL = "https://github.com/CreepNT/test_repo" #URL of the GitHub repository 
 
 REMOTE_DATABASE_PATH = "errors.json" #Path to the database file on the remote repository.
 DATABASE_PATH = "errordb.json" #Path where the database file will be saved locally.
-
-SHA1_SUM_STORAGE = "sha1sum.txt" #Path where the SHA-1 store file will be saved locally.
