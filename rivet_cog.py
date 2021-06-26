@@ -194,8 +194,8 @@ class RivetCog(APIContractor, commands.Cog):
             if await self.__installLocalDatabase(self.errorsDB.localPath, remoteDB):
                 self.errorsDB.sha1 = remoteDBSha1
                 print(f"New errors database SHA-1 : {self.errorsDB.sha1}")
-                databaseObject = errorsDatabase.getDatabaseFromJSONFile(self.errorsDB.localPath)
-                if databaseObject == None:
+                self.errorsDB.databaseObject = errorsDatabase.getDatabaseFromJSONFile(self.errorsDB.localPath)
+                if self.errorsDB.databaseObject == None:
                     await ctx.send("Failed to load new errors database.")
                     updateFailed = True
                 else:
