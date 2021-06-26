@@ -1,3 +1,7 @@
 SECRETS.py
 __pycache__
 __pycache__/*
+errorsdb.json
+errorsdb.json.old
+short_codes.json
+short_codes.json.old

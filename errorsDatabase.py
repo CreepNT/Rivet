@@ -1,5 +1,6 @@
 import gc
 import json
+from hashlib import sha1
 from dataclasses import dataclass
 from typing import NewType, Dict, List
 
@@ -372,20 +373,20 @@ def getMergedDbAndJSONFile(dstDb : Database, appendedDbFilePath : str, overwrite
 
     return ret
 
-#Returns a Database object on success, None otherwise.
+#Returns a Database object and the SHA-1 sum of the database file on success, None otherwise.
 def getDatabaseFromJSONFile(dbFilePath : str) -> Database:
     try:
         fh = open(dbFilePath, "r")
     except IOError:
-        print(f"Failed to open {dbFilePath} for reading.")
+        print(f"Failed to open '{dbFilePath}' for reading.")
         return None
 
     dbData = fh.read()
     fh.close()
-    ret = getDatabaseFromJSONString(dbData)
+    dbObj = getDatabaseFromJSONString(dbData)
 
     del dbData
     gc.collect() #Ensure that file contents are free'd from memory, since we don't need them anymore
 
-    return ret
+    return dbObj
     
