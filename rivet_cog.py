@@ -423,7 +423,7 @@ class RivetCog(APIContractor, commands.Cog):
 
         await ctx.send("Exiting...")
         await self.bot.change_presence(activity=discord.Game("Busy"), status=discord.Status.dnd)
-        os.abort()
+        os._exit(0)
     
     async def cog_command_error(self, ctx, error):
         print(f"In cog_command_error : \n{error}")
