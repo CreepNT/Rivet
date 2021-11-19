@@ -190,7 +190,7 @@ def getDecoratedErrorCodeInfo(db : Database, error_code : int) -> str:
         return "Illegal error code."
 
     fatal = (error_code & IS_FATAL_MASK)
-    facility = (error_code & FACILITY_MASK)
+    facility = (error_code & FACILITY_MASK) >> 16
     if (facility > 0x100): #Biggest facility is 0x100 for SCREAM/NPToolkit - 0x81xxxxxx is probably a pointer
         return f"Facility 0x{facility:X} is too high to be valid - are you sure this isn't a pointer?"
     
