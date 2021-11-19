@@ -393,16 +393,18 @@ class RivetCog(APIContractor, commands.Cog):
         try:
             errcode = int(input_str, 16)
         except ValueError:
-            if not self.shortCodesDB.databaseObject.IsValidDatabaseLoaded():
+            if (self.shortCodesDB.databaseObject == None) or not self.shortCodesDB.databaseObject.IsValidDatabaseLoaded():
                 await ctx.send("No valid short error codes database is currently loaded : cannot try to resolve.")
                 return
 
-            errcode = self.shortCodesDB.databaseObject.ResolveShortCode(input_str)
+            short_code = input_str.upper() #Our DB stores short codes in uppercase - we need to make input uppercase for matching to work
+            errcode = self.shortCodesDB.databaseObject.ResolveShortCode(short_code)
             if errcode == 0:
                 await ctx.send(f"`{input_str}` is an unknown short code or an invalid input.")
                 return
             else:
-                printStr += f"Short code {input_str} -> 0x{errcode:08X}\n"
+		#Found a match - print which hex code this short code maps to, and process hex code
+                printStr += f"Short code {short_code} -> 0x{errcode:08X}\n"
         if (errcode & 0xFFFFFFFF) != errcode:
             await ctx.send("Input too long - error codes are only 4 bytes wide.")
             return
