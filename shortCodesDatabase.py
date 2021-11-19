@@ -78,4 +78,4 @@ class SCDatabase:
         if self.hashMap == None:
             return 0
         else:
-            return int(self.hashMap.get(shortCode, 0), 16)
+            return int(self.hashMap.get(shortCode, "0"), 16)
