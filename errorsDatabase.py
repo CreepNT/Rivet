@@ -67,25 +67,26 @@ Database = NewType('Database', Dict[int, Facility])
 #Can this be a taiHEN error code ?
 #Code by Princess of Sleeping
 def isTaiHENErrorCode(error_code : int) -> bool: 
-    if (error_code - 0x90010000) <= 0xD and (error_code - 0x90010000) >= 0:
-        return True
-    else:
-        return False
+    return (0 <= (error_code - 0x90010000) <= 0xD)
 
 #Get the name of a taiHEN error.
 def getTaiHENErrorName(taiErrCode : int) -> str:
     taiHenErrors = [
-        "TAI_ERROR_SYSTEM",
-        "TAI_ERROR_MEMORY",
-        "TAI_ERROR_NOT_FOUND",
-        "TAI_ERROR_INVALID_ARGS",
-        "TAI_ERROR_INVALID_KERNEL_ADDR",
-        "TAI_ERROR_PATCH_EXISTS",
-        "TAI_ERROR_HOOK_ERROR",
-        "TAI_ERROR_STUB_NOT_RESOLVED",
-        "TAI_ERROR_INVALID_MODULE",
-        "TAI_ERROR_MODULE_OVERFLOW",
-        "TAI_ERROR_BLOCKING"]
+        "TAI_ERROR_SYSTEM",              #0x90010000
+        "TAI_ERROR_MEMORY",              #0x90010001
+        "TAI_ERROR_NOT_FOUND",           #0x90010002
+        "TAI_ERROR_INVALID_ARGS",        #0x90010003
+        "TAI_ERROR_INVALID_KERNEL_ADDR", #0x90010004
+        "TAI_ERROR_PATCH_EXISTS",        #0x90010005
+        "TAI_ERROR_HOOK_ERROR",          #0x90010006
+        "TAI_ERROR_NOT_IMPLEMENTED",	 #0x90010007
+        "TAI_ERROR_USER_MEMORY",	 #0x90010008
+        "TAI_ERROR_NOT_ALLOWED",         #0x90010009
+        "TAI_ERROR_STUB_NOT_RESOLVED",   #0x9001000A
+        "TAI_ERROR_INVALID_MODULE",      #0x9001000B
+        "TAI_ERROR_MODULE_OVERFLOW",     #0x9001000C
+        "TAI_ERROR_BLOCKING"             #0x9001000D
+    ]
     return taiHenErrors[taiErrCode & ERROR_NUM_MASK]
 
 #Returns the name of a facility given its number, or a placeholder string if the facility is unknown
