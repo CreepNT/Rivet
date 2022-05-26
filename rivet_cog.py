@@ -389,10 +389,11 @@ class RivetCog(APIContractor, commands.Cog):
 
     @commands.command(name="error_code", aliases=["sce_error", "error", "ec"], help="Displays the name of a given error code (in hexadecimal or short code)")
     async def resolveErrorCode(self, ctx, input_str : str):
+        isShortCode = False
         printStr = "```\n"
         try:
             errcode = int(input_str, 16)
-        except ValueError:
+        except ValueError: #Not an integer - try as short code (string)
             if (self.shortCodesDB.databaseObject == None) or not self.shortCodesDB.databaseObject.IsValidDatabaseLoaded():
                 await ctx.send("No valid short error codes database is currently loaded : cannot try to resolve.")
                 return
@@ -402,10 +403,16 @@ class RivetCog(APIContractor, commands.Cog):
             if errcode == 0:
                 await ctx.send(f"`{input_str}` is an unknown short code or an invalid input.")
                 return
-            else:
-		#Found a match - print which hex code this short code maps to, and process hex code
+            else: #Found a match - print which hex code this short code maps to, and process hex code
                 printStr += f"Short code {short_code} -> 0x{errcode:08X}\n"
-        if (errcode & 0xFFFFFFFF) != errcode:
+                isShortCode = True
+                
+        if not isShortCode and input_str[0] == '-': #Negative error codes get sign-extended to 64-bit - clamp to 32-bit
+            signExtendedError = errcode
+            errcode &= 0xFFFFFFFF
+            printStr += "-0x" + f"{signExtendedError:08X}"[1:] + f" -> 0x{errcode:08X}\n" 
+
+        if ((errcode & 0xFFFFFFFF) != errcode):
             await ctx.send("Input too long - error codes are only 4 bytes wide.")
             return
 
